@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Activity Details</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #4a90e2, #f06);
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      min-height: 100vh;
+      margin: 0;
+      padding: 20px;
+    }
+    header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+    }
+    .container {
+      width: 100%;
+      max-width: 900px;
+    }
+    .row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 30px;
+    }
+    .row video {
+      width: 45%;
+      border-radius: 10px;
+      background: #000; /* Fallback color for loading state */
+    }
+    .details {
+      width: 45%;
+      text-align: left;
+    }
+    .details h2 {
+      font-size: 1.5rem;
+      margin-bottom: 10px;
+    }
+    .details ul {
+      list-style: disc;
+      margin-left: 20px;
+      font-size: 1rem;
+      line-height: 1.5;
+    }
+    .btn-container {
+      text-align: center;
+      margin-top: 30px;
+    }
+    button {
+      background-color: #fff;
+      color: #4a90e2;
+      padding: 15px 30px;
+      font-size: 1rem;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    button:hover {
+      background-color: #4a90e2;
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1 id="activityName">Activity: Loading...</h1>
+  </header>
+  <div class="container">
+    <!-- First Row: Before -->
+    <div class="row">
+      <video id="videoBefore" controls>
+        <source id="videoSourceBefore" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+      <div class="details">
+        <h2 id="titleBefore">Muscles Targeted (Before)</h2>
+        <ul id="musclesBefore">
+          <li>Loading...</li>
+        </ul>
+      </div>
+    </div>
+    <!-- Second Row: After -->
+    <div class="row">
+      <video id="videoAfter" controls>
+        <source id="videoSourceAfter" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+      <div class="details">
+        <h2 id="titleAfter">Muscles Targeted (After)</h2>
+        <ul id="musclesAfter">
+          <li>None</li>
+        </ul>
+      </div>
+    </div>
+    <!-- Button for Gym Exercises -->
+    <div class="btn-container">
+      <button onclick="redirectToPage(3)">Exercises in Gym We Do</button>
+    </div>
+  </div>
+
+  <script>
+    // Fetch data from localStorage
+    const activityName = localStorage.getItem('activityName');
+    const videoUrlBefore = localStorage.getItem('videoUrl'); // Video for "Before"
+    const videoUrlAfter = activityName === 'Grinding by Hand' ? '/static/videos/mixer.mp4' :
+                          activityName === 'Washing Clothes by Hand' ? '/static/videos/washing_machine.mp4' :
+                          activityName === 'Fetching Water' ? '/static/videos/motor_fetching.mp4' :
+                          activityName === 'Weaving' ? '/static/videos/weaving_machine.mp4' :
+                          activityName === 'Pounding Paddy by hands' ? '/static/videos/poundingPaddy_machine.mp4' : '';
+
+    // Update DOM elements
+    if (activityName) {
+      document.getElementById('activityName').textContent = `Activity: ${activityName}`;
+
+      // Set video sources
+      const videoSourceBefore = document.getElementById('videoSourceBefore');
+      const videoSourceAfter = document.getElementById('videoSourceAfter');
+      videoSourceBefore.src = videoUrlBefore || '/static/videos/fallback_before.mp4';
+      videoSourceAfter.src = videoUrlAfter || '/static/videos/fallback_after.mp4';
+
+      // Reload videos to apply new sources
+      document.getElementById('videoBefore').load();
+      document.getElementById('videoAfter').load();
+
+      // Update titles and muscle targets
+      const musclesBefore = document.getElementById('musclesBefore');
+      const titleBefore = document.getElementById('titleBefore');
+      const titleAfter = document.getElementById('titleAfter');
+
+      if (activityName === 'Grinding by Hand') {
+        titleBefore.textContent = 'Muscles Targeted (Before: Grinding by Hand)';
+        musclesBefore.innerHTML = '<li>Chest</li><li>Shoulders</li><li>Core</li>';
+        titleAfter.textContent = 'Muscles Targeted (After: Grinding Using Electric Grinder)';
+      } else if (activityName === 'Washing Clothes by Hand') {
+        titleBefore.textContent = 'Muscles Targeted (Before: Washing Clothes by Hand)';
+        musclesBefore.innerHTML = '<li>Back</li><li>Arms</li><li>Core</li>';
+        titleAfter.textContent = 'Muscles Targeted (After: Washing Using Machine)';
+      } else if (activityName === 'Fetching Water') {
+        titleBefore.textContent = 'Muscles Targeted (Before: Fetching Water)';
+        musclesBefore.innerHTML = '<li>Legs</li><li>Arms</li><li>Back</li>';
+        titleAfter.textContent = 'Muscles Targeted (After: Fetching Water Using Pump)';
+      } else if (activityName === 'Weaving') {
+        titleBefore.textContent = 'Muscles Targeted (Before: Weaving)';
+        musclesBefore.innerHTML = '<li>Arms</li><li>Fingers</li><li>Shoulders</li>';
+        titleAfter.textContent = 'Muscles Targeted (After: Weaving Using Machines)';
+      } else if (activityName === 'Pounding Paddy by hands') {
+        titleBefore.textContent = 'Muscles Targeted (Before: Pounding Paddy by Hands)';
+        musclesBefore.innerHTML = '<li>Shoulders</li><li>Arms</li><li>Core</li>';
+        titleAfter.textContent = 'Muscles Targeted (After: Machine for Seed Cleaning)';
+      } else {
+        musclesBefore.innerHTML = '<li>Data not available</li>';
+      }
+    } else {
+      alert('No activity selected. Redirecting to Page 1.');
+      window.location.href = 'page1.html';
+    }
+
+    // Video error handling
+    document.getElementById('videoBefore').onerror = function() {
+      console.error('Error loading "Before" video:', videoSourceBefore.src);
+    };
+    
+    document.getElementById('videoAfter').onerror = function() {
+      console.error('Error loading "After" video:', videoSourceAfter.src);
+    };
+
+    // Redirect to page 3
+    function redirectToPage(page) {
+      window.location.href = `/page${page}`;
+    }
+  </script>
+</body>
+</html>

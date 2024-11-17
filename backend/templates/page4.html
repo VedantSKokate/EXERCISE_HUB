@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Difference between Activity and Gym Exercises</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #f06, #4a90e2);
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      height: 100vh;
+      margin: 0;
+      padding: 20px;
+    }
+    
+    header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+    }
+    
+    .comparison-container {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      width: 100%;
+      max-width: 1200px;
+    }
+    
+    .comparison-column {
+      width: 45%;
+      padding: 10px;
+      font-size: 1.2rem;
+      line-height: 1.6;
+    }
+
+    /* Middle dividing line */
+    .line {
+      width: 10px;
+      background-color: #fff;
+      height: 100%;
+      margin: 0 20px;
+      border-radius: 5px;
+    }
+
+    /* Bullet points for each section */
+    ul {
+      list-style-type: disc;
+      margin-left: 20px;
+      padding-left: 0;
+    }
+
+    ul li {
+      margin-bottom: 10px;
+    }
+
+    button {
+      background-color: #fff;
+      color: #4a90e2;
+      padding: 15px 30px;
+      font-size: 1rem;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.3s;
+      margin-top: 40px;
+    }
+
+    button:hover {
+      background-color: #4a90e2;
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Difference between <span id="activityName"></span> and Gym Exercises</h1>
+  </header>
+
+  <div class="comparison-container">
+    <!-- Left Column: Activity Comparison -->
+    <div class="comparison-column" id="activityComparison">
+      <h2>Exercise through Selected Activity</h2>
+      <ul>
+        <!-- Dynamic content for selected activity will be inserted here -->
+      </ul>
+    </div>
+
+    <!-- Middle Line -->
+    <div class="line"></div>
+
+    <!-- Right Column: Gym Comparison -->
+    <div class="comparison-column" id="gymComparison">
+      <h2>Exercise through Gym Workout</h2>
+      <ul>
+        <!-- Dynamic content for gym exercises will be inserted here -->
+      </ul>
+    </div>
+  </div>
+
+  <button onclick="redirectToPage(5)">New efficient exercise to overcome this</button>
+
+  <script>
+    // Retrieve the selected activity from localStorage
+    const selectedActivity = localStorage.getItem('activityName');
+    document.getElementById('activityName').textContent = selectedActivity || 'Selected Activity';
+
+    // Define comparisons for each activity
+    const activityComparisonMap = {
+      'Grinding by Hand': {
+        activity: [
+          'Engages chest, shoulders, and triceps together in functional motion.',
+          'Requires balance and full body coordination.',
+          'Involves constant upper body movement, leading to more calorie burn.',
+          'Targets core muscles for stabilization throughout the activity.'
+        ],
+        gym: [
+          'Bench Press isolates chest and triceps.',
+          'Gym exercises focus on individual muscle groups, reducing overall body coordination.',
+          'Calories are burned less consistently due to rest between sets.',
+          'Gym machines may not engage stabilizing muscles as much as manual activities.'
+        ]
+      },
+      'Washing Clothes by Hand': {
+        activity: [
+          'Simultaneous engagement of back, biceps, and forearms.',
+          'Requires repetitive pulling and scrubbing motions, enhancing muscle endurance.',
+          'Involves a range of motion that gym exercises might not fully capture.',
+          'Improves functional strength needed for day-to-day tasks.'
+        ],
+        gym: [
+          'Lat Pulldown isolates back and biceps.',
+          'Gym routines focus more on muscle building and less on endurance training.',
+          'Gym exercises typically limit the range of motion to a controlled path.',
+          'Targets muscle size but less on functional movements needed outside the gym.'
+        ]
+      },
+      'Fetching Water': {
+        activity: [
+          'Engages core, legs, and back muscles while balancing weight.',
+          'Functional full-body coordination is required to carry water efficiently.',
+          'Lifting and carrying heavy loads simulates weight training with natural movements.',
+          'Improves endurance and muscular balance due to uneven weight distribution.'
+        ],
+        gym: [
+          'Deadlift targets the lower back, legs, and core but in a more isolated manner.',
+          'Gym routines emphasize strength with less focus on balancing weight dynamically.',
+          'Gym exercises are controlled, repetitive, and lack the unpredictability of manual labor.',
+          'Strengthens specific muscles but lacks the natural balance and coordination needed in daily life tasks.'
+        ]
+      }
+      // Add more activity comparisons here, similar to the above
+    };
+
+    // Get the corresponding comparison data
+    const comparisonData = activityComparisonMap[selectedActivity] || {
+      activity: ['No specific comparison available for this activity.'],
+      gym: ['No specific comparison available for gym exercises.']
+    };
+
+    // Render the left column (Activity) comparison points
+    const activityComparisonList = document.getElementById('activityComparison').querySelector('ul');
+    comparisonData.activity.forEach(point => {
+      const li = document.createElement('li');
+      li.textContent = point;
+      activityComparisonList.appendChild(li);
+    });
+
+    // Render the right column (Gym) comparison points
+    const gymComparisonList = document.getElementById('gymComparison').querySelector('ul');
+    comparisonData.gym.forEach(point => {
+      const li = document.createElement('li');
+      li.textContent = point;
+      gymComparisonList.appendChild(li);
+    });
+
+    // Function to redirect to page 5
+    function redirectToPage(page) {
+      window.location.href = `/page${page}`;
+    }
+  </script>
+
+</body>
+</html>

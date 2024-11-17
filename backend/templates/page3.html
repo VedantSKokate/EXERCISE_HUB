@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gym Exercises</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #4a90e2, #f06);
+      color: #fff;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    header {
+      margin-top: 20px;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+    }
+
+    .video-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);  /* Two videos per row */
+      gap: 30px;  /* More gap for better spacing */
+      width: 90%;
+      padding: 20px;
+      max-height: 65vh;  /* Limit height */
+      overflow-y: scroll;  /* Scrollbar for third row */
+    }
+
+    .exercise {
+      text-align: center;
+      background: rgba(255, 255, 255, 0.1);
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s, background 0.3s;
+    }
+
+    .exercise:hover {
+      transform: translateY(-5px);
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    video {
+      width: 100%;
+      height: 300px;  /* Increased height of videos */
+      border-radius: 10px;
+      border: 2px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .exercise p {
+      font-size: 1.2rem;
+      margin-top: 10px;
+      color: #fff;
+    }
+
+    button {
+      margin-top: 30px;
+      background-color: #fff;
+      color: #4a90e2;
+      padding: 15px 30px;
+      font-size: 1rem;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    button:hover {
+      background-color: #4a90e2;
+      color: #fff;
+    }
+
+    footer {
+      margin-top: 20px;
+      text-align: center;
+    }
+
+    /* Style scrollbar */
+    .video-grid::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    .video-grid::-webkit-scrollbar-thumb {
+      background-color: rgba(255, 255, 255, 0.3);
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Exercises in Gym for Similar Muscle Targeting</h1>
+  </header>
+
+  <section class="video-grid" id="exerciseGrid">
+    <!-- Dynamic gym exercises will be loaded here based on the selected activity -->
+  </section>
+
+  <footer>
+    <button onclick="redirectToPage(4)">See difference between selected activity and above gym exercises</button>
+  </footer>
+
+  <script>
+    // Retrieve the selected activity from localStorage
+    const selectedActivity = localStorage.getItem('activityName');
+
+    // Define a mapping from activities to gym exercises
+    const activityToExercisesMap = {
+      'Grinding by Hand': [
+        { video: '/static/videos/benchpress.mp4', description: 'Bench Press (Chest, Shoulders, Triceps)' },
+        { video: '/static/videos/plank.mp4', description: 'Plank (Core, Shoulders)' },
+        { video: '/static/videos/pushups.mp4', description: 'Push-ups (Chest, Core, Shoulders)' }
+      ],
+      'Washing Clothes by Hand': [
+        { video: '/static/videos/latpulldown.mp4', description: 'Lat Pulldown (Back, Biceps)' },
+        { video: '/static/videos/bentoverrow.mp4', description: 'Bent Over Row (Back, Shoulders)' }
+      ],
+      'Fetching Water': [
+        { video: '/static/videos/deadlift.mp4', description: 'Deadlift (Back, Legs, Core)' },
+        { video: '/static/videos/squats.mp4', description: 'Squats (Legs, Core)' }
+      ],
+      'Weaving': [
+        { video: '/static/videos/shoulderpress.mp4', description: 'Shoulder Press (Shoulders, Triceps)' },
+        { video: '/static/videos/latraises.mp4', description: 'Lateral Raises (Shoulders)' }
+      ],
+      'Sewing by Hand': [
+        { video: '/static/videos/bicepcurl.mp4', description: 'Bicep Curl (Biceps)' },
+        { video: '/static/videos/tricepsextension.mp4', description: 'Triceps Extension (Triceps)' }
+      ],
+      'Pounding Grains': [
+        { video: '/static/videos/hammercurl.mp4', description: 'Hammer Curl (Biceps, Forearms)' },
+        { video: '/static/videos/overheadpress.mp4', description: 'Overhead Press (Shoulders, Triceps)' }
+      ]
+    };
+
+    // Function to render gym exercises based on the selected activity
+    function renderExercises() {
+      const exerciseGrid = document.getElementById('exerciseGrid');
+
+      // Get the exercises for the selected activity from the map
+      const exercises = activityToExercisesMap[selectedActivity] || [];
+
+      // Clear the existing grid content
+      exerciseGrid.innerHTML = '';
+
+      // Dynamically create exercise elements and append to the grid
+      exercises.forEach(exercise => {
+        const exerciseElement = document.createElement('div');
+        exerciseElement.classList.add('exercise');
+
+        const videoElement = document.createElement('video');
+        videoElement.src = exercise.video;
+        videoElement.controls = true;
+
+        const descriptionElement = document.createElement('p');
+        descriptionElement.textContent = exercise.description;
+
+        exerciseElement.appendChild(videoElement);
+        exerciseElement.appendChild(descriptionElement);
+
+        exerciseGrid.appendChild(exerciseElement);
+      });
+    }
+
+    // Call the function to render the exercises when the page loads
+    window.onload = renderExercises;
+
+    // Function to redirect to page4
+    function redirectToPage(page) {
+      window.location.href = `/page${page}`;
+    }
+  </script>
+</body>
+</html>

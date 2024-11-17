@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Efficient Exercises</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #4a90e2, #f06);
+      color: #fff;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      height: 100vh;
+      overflow: hidden;
+    }
+    header {
+      text-align: center;
+      margin: 20px 0;
+    }
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+    }
+    .slider-container {
+      display: flex;
+      overflow-x: scroll;
+      gap: 20px;
+      width: 90%;
+      padding: 20px 0;
+      scroll-snap-type: x mandatory;
+      margin-bottom: 20px;
+    }
+    .exercise {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 15px;
+      border-radius: 10px;
+      text-align: center;
+      scroll-snap-align: center;
+      min-width: 300px;
+      transition: transform 0.3s, background 0.3s;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+    .exercise:hover {
+      transform: scale(1.05);
+      background: rgba(255, 255, 255, 0.2);
+    }
+    .exercise video {
+      width: 100%;
+      height: 250px;
+      border-radius: 10px;
+      transition: all 0.3s ease;
+    }
+    .slider-container::-webkit-scrollbar {
+      display: none;
+    }
+    .instructions {
+      padding: 20px;
+      width: 90%;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      overflow-y: auto;
+      max-height: 200px;
+    }
+    h2 {
+      font-size: 1.8rem;
+      margin-bottom: 10px;
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+    li {
+      font-size: 1.2rem;
+      margin: 10px 0;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Efficient Exercises</h1>
+  </header>
+
+  <div class="slider-container" id="exerciseContainer">
+    <!-- Dynamic Exercise Videos will be injected here -->
+  </div>
+
+  <div class="instructions" id="instructionContainer">
+    <h2>Instructions</h2>
+    <ul id="instructionList">
+      <!-- Dynamic Instructions will be injected here -->
+    </ul>
+  </div>
+
+  <script>
+    // Retrieve the selected activity from localStorage
+    const selectedActivity = localStorage.getItem('activityName') || 'default';
+
+    // Define videos and instructions for each activity
+    const exerciseData = {
+      'Grinding by Hand': {
+        exercises: [
+          {
+            video: '/static/videos/superman_pushup.mp4',
+            description: 'Superman Pushups (Core, Shoulders)'
+          },
+          {
+            video: '/static/videos/Chaturangadandasana.mp4',
+            description: 'Chaturanga Dandasana (Legs, Core)'
+          }
+        ],
+        instructions: [
+          'Do 3 sets of each grinding exercise daily.',
+          'Eat protein-rich foods after exercise for muscle repair.',
+          'Stay hydrated and maintain balance while exercising.',
+          'Ensure proper form to avoid injury, especially to your back.',
+          'Rest for 60 seconds between sets.'
+        ]
+      },
+      'Fetching Water': {
+        exercises: [
+          {
+            video: '/static/videos/fetchingwater1.mp4',
+            description: 'Exercise 1 (Legs, Core)'
+          },
+          {
+            video: '/static/videos/fetchingwater2.mp4',
+            description: 'Exercise 2 (Back, Shoulders)'
+          }
+        ],
+        instructions: [
+          'Do 4 sets of each fetching exercise, focusing on balance.',
+          'Lift weights similar to water buckets to simulate the activity.',
+          'Take breaks if you feel fatigued, as these exercises are demanding.',
+          'Focus on your core and back muscles to stabilize your body.',
+          'Hydrate before and after the exercises to avoid cramps.'
+        ]
+      },
+      'Washing Clothes by Hand': {
+        exercises: [
+          {
+            video: '/static/videos/DumbbellBentOverRow.mp4',
+            description: 'Dumbbell Bent Over Row (Arms, Core)'
+          },
+          {
+            video: '/static/videos/SuryaNamaskara.mp4',
+            description: 'Surya Namaskara (Shoulders, Back)'
+          }
+        ],
+        instructions: [
+          'Do 3 sets of each exercise with emphasis on form.',
+          'Use resistance bands or weights to mimic the washing motion.',
+          'Focus on squeezing your muscles to maximize effectiveness.',
+          'Avoid rushing through movements to prevent injury.',
+          'Rest for 45 seconds between each set.'
+        ]
+      },
+      'default': {
+        exercises: [
+          {
+            video: '/static/videos/default1.mp4',
+            description: 'Exercise 1 (Core, Legs)'
+          },
+          {
+            video: '/static/videos/default2.mp4',
+            description: 'Exercise 2 (Arms, Shoulders)'
+          }
+        ],
+        instructions: [
+          'Perform these exercises if no specific activity was selected.',
+          'Do 3 sets of each exercise daily.',
+          'Stay hydrated and maintain proper form throughout.',
+          'Ensure to stretch before and after your workout to avoid injury.',
+          'Rest for 30 seconds between each set.'
+        ]
+      }
+    };
+
+    // Get the relevant data for the selected activity
+    const activityData = exerciseData[selectedActivity] || exerciseData['default'];
+
+    // Populate exercises
+    const exerciseContainer = document.getElementById('exerciseContainer');
+    activityData.exercises.forEach(exercise => {
+      const exerciseDiv = document.createElement('div');
+      exerciseDiv.classList.add('exercise');
+      exerciseDiv.innerHTML = `
+        <video src="${exercise.video}" controls></video>
+        <p>${exercise.description}</p>
+      `;
+      exerciseDiv.onclick = () => redirectToExercise(exercise.description);
+      exerciseContainer.appendChild(exerciseDiv);
+    });
+
+    // Populate instructions
+    const instructionList = document.getElementById('instructionList');
+    activityData.instructions.forEach(instruction => {
+      const li = document.createElement('li');
+      li.textContent = instruction;
+      instructionList.appendChild(li);
+    });
+
+    // Function to redirect to the specific exercise page with exercise name
+    function redirectToExercise(exerciseDescription) {
+      const exerciseName = exerciseDescription.toLowerCase().replace(/[^a-z0-9]/g, ''); // Make it URL-friendly
+      window.location.href = `/page6/${exerciseName}`;
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ancient Women's Activities</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #f06, #4a90e2);
+      color: #fff;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      overflow-x: hidden;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      letter-spacing: 1px;
+      margin-bottom: 10px;
+    }
+
+    p {
+      font-size: 1.2rem;
+      max-width: 600px;
+      margin-top: 0;
+    }
+
+    .scroll-wrapper {
+      width: 100vw; /* Full screen width for container */
+      overflow-x: auto; /* Enable horizontal scroll */
+      white-space: nowrap; /* Prevent wrapping of columns */
+      scroll-behavior: smooth; /* Smooth scrolling */
+    }
+
+    .block {
+      display: inline-block; /* Columns align horizontally */
+      vertical-align: top;
+      width: 23%; /* 4 columns fit in one screen (100% / 4) */
+      margin: 0 10px; /* Margin between blocks */
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      padding: 10px;
+      box-sizing: border-box;
+    }
+
+    .activity {
+      padding: 10px;
+      border-radius: 10px;
+      text-align: center;
+      margin: 10px 0;
+      cursor: pointer;
+      transition: transform 0.3s ease, background 0.3s ease;
+    }
+
+    .activity:hover {
+      transform: scale(1.05);
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .video-wrapper {
+      position: relative;
+      width: 100%;
+      padding-bottom: 56.25%; /* Aspect ratio 16:9 */
+      overflow: hidden;
+      border-radius: 10px;
+    }
+
+    .video-wrapper video {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .label {
+      font-size: 1rem;
+      font-weight: bold;
+      text-align: center;
+      margin-bottom: 5px;
+      color: #ffffff; /* White color for contrast */
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Explore Ancient Daily Activities</h1>
+    <p>Discover how these activities targeted specific muscle groups, now replaced by machines.</p>
+  </header>
+
+  <!-- Scrollable Horizontal Grid Layout -->
+  <div class="scroll-wrapper">
+    <!-- Column 1 -->
+    <div class="block">
+      <div class="label">Before</div>
+      <div class="activity" onclick="selectActivity('Grinding by Hand', '/static/videos/Stone_grinding.mp4')">
+        <div class="video-wrapper">
+          <video src="/static/videos/grinding_by_hand.mp4" controls></video>
+        </div>
+        <p>Grinding by Hand</p>
+      </div>
+      <div class="label">Nowadays</div>
+      <div class="activity" onclick="selectActivity('Grinding using electric grinder', '/static/videos/Stone_grinding_2.mp4')">
+        <div class="video-wrapper">
+          <video src="/static/videos/mixer.mp4" controls></video>
+        </div>
+        <p>Grinding Using Electric Grinder</p>
+      </div>
+    </div>
+
+    <!-- Column 2 -->
+    <div class="block">
+      <div class="label">Before</div>
+      <div class="activity" onclick="selectActivity('Washing Clothes by Hand', '/static/videos/washing_clothes.mp4')">
+        <div class="video-wrapper">
+          <video src="/static/videos/washing_clothes.mp4" controls></video>
+        </div>
+        <p>Washing Clothes by Hand</p>
+      </div>
+      <div class="label">Nowadays</div>
+      <div class="activity" onclick="selectActivity('Washing Clothes using Washing Machine', '/static/videos/washing_clothes_2.mp4')">
+        <div class="video-wrapper">
+          <video src="/static/videos/washing_machine.mp4" controls></video>
+        </div>
+        <p>Washing Using Machine</p>
+      </div>
+    </div>
+
+    <!-- Column 3 -->
+    <div class="block">
+      <div class="label">Before</div>
+      <div class="activity" onclick="selectActivity('Fetching Water', '/static/videos/activity3.mp4')">
+        <div class="video-wrapper">
+          <video src="/static/videos/hand_fetching.mp4" controls></video>
+        </div>
+        <p>Fetching Water</p>
+      </div>
+      <div class="label">Nowadays</div>
+      <div class="activity" onclick="selectActivity('Fetching Water-Pump Machine', '/static/videos/activity3_2.mp4')">
+        <div class="video-wrapper">
+          <video src="/static/videos/motor_fetching.mp4" controls></video>
+        </div>
+        <p>Fetching Water Using Pump</p>
+      </div>
+    </div>
+
+    <!-- Column 4 -->
+    <div class="block">
+      <div class="label">Before</div>
+      <div class="activity" onclick="selectActivity('Weaving', '/static/videos/activity4.mp4')">
+        <div class="video-wrapper">
+          <video src="/static/videos/weaving_by_hands.mp4" controls></video>
+        </div>
+        <p>Weaving</p>
+      </div>
+      <div class="label">Nowadays</div>
+      <div class="activity" onclick="selectActivity('Weaving using machines', '/static/videos/activity4_2.mp4')">
+        <div class="video-wrapper">
+          <video src="/static/videos/weaving_machine.mp4" controls></video>
+        </div>
+        <p>Weaving Using Machines</p>
+      </div>
+    </div>
+
+    <!-- Column 5 -->
+    <div class="block">
+      <div class="label">Before</div>
+      <div class="activity" onclick="selectActivity('Pounding Paddy by hands', '/static/videos/activity5.mp4')">
+        <div class="video-wrapper">
+          <video src="/static/videos/PoundingPaddy_by hands.mp4" controls></video>
+        </div>
+        <p>Pounding paddy Traditional Method</p>
+      </div>
+      <div class="label">Nowadays</div>
+      <div class="activity" onclick="selectActivity('Pounding Paddy Machine', '/static/videos/activity5_2.mp4')">
+        <div class="video-wrapper">
+          <video src="/static/videos/poundingPaddy_machine.mp4" controls></video>
+        </div>
+        <p>Pounding Paddy Machine</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function selectActivity(activity, videoUrl) {
+      localStorage.setItem('activityName', activity);
+      localStorage.setItem('videoUrl', videoUrl);
+      window.location.href = '/page2?exercise_name=Push-Ups&video1_url=/static/videos/video1.mp4&video2_url=/static/videos/video2.mp4';
+    }
+  </script>
+  
+</body>
+</html>

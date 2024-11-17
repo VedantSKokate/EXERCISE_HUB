@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Exercise Details</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #4a90e2, #f06);
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+    header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+    }
+    .container {
+      display: flex;
+      flex-direction: row;
+      align-items: flex-start;
+      justify-content: center;
+      gap: 40px;
+      width: 90%;
+    }
+    video {
+      border-radius: 10px;
+      width: 45%;
+    }
+    .details {
+      text-align: left;
+      width: 45%;
+    }
+    .details h2 {
+      font-size: 1.8rem;
+      margin-bottom: 10px;
+    }
+    .details ul {
+      list-style-type: disc;
+      margin-left: 20px;
+      font-size: 1.2rem;
+      line-height: 1.6;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1 id="exerciseTitle">Exercise Details</h1>
+  </header>
+  
+  <div class="container">
+    <video id="exerciseVideo" controls></video>
+    
+    <div class="details">
+      <h2>Muscles Targeted:</h2>
+      <ul id="muscleList">
+        <!-- Dynamic Muscle Targeting will be injected here -->
+      </ul>
+    </div>
+  </div>
+
+  <script>
+    // Retrieve the selected exercise name from the URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const exerciseName = urlParams.get('exercise'); // Get exercise name
+
+    // Define exercises and their details
+    const exerciseDetails = {
+      'supermanpushups': {
+        video: '/static/videos/superman_pushup.mp4',
+        title: 'Superman Pushups (Core, Shoulders)',
+        muscles: ['Core', 'Shoulders', 'Arms']
+      },
+      'chaturangadandasana': {
+        video: '/static/videos/Chaturangadandasana.mp4',
+        title: 'Chaturanga Dandasana (Legs, Core)',
+        muscles: ['Legs', 'Core']
+      },
+      'dumbbellbentoverrow': {
+        video: '/static/videos/DumbbellBentOverRow.mp4',
+        title: 'Dumbbell Bent Over Row (Arms, Core)',
+        muscles: ['Core', 'Arms']
+      },
+      'suryanamaskara': {
+        video: '/static/videos/SuryaNamaskara.mp4',
+        title: 'Surya Namaskara (Shoulders, Back)',
+        muscles: ['Legs', 'Core', 'Shoulders', 'Back']
+      },
+      'default': {
+        video: '/static/videos/default.mp4',
+        title: 'Default Exercise',
+        muscles: ['Full Body']
+      }
+    };
+
+    // Get the details of the selected exercise
+    const selectedExercise = exerciseDetails[exerciseName.toLowerCase().replace(/[^a-z0-9]/g, '')] || exerciseDetails['default'];
+
+    // Set the video source and title
+    document.getElementById('exerciseVideo').src = selectedExercise.video;
+    document.getElementById('exerciseTitle').innerText = selectedExercise.title;
+
+    // Populate the muscles targeted
+    const muscleList = document.getElementById('muscleList');
+    selectedExercise.muscles.forEach(muscle => {
+      const li = document.createElement('li');
+      li.textContent = muscle;
+      muscleList.appendChild(li);
+    });
+
+    // Debugging logs
+    console.log('Exercise Name from URL:', exerciseName);
+    console.log('Selected Exercise:', selectedExercise);
+  </script>
+</body>
+</html>
