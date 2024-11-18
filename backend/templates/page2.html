@@ -86,7 +86,7 @@
         Your browser does not support the video tag.
       </video>
       <div class="details">
-        <h2 id="titleBefore">Muscles Targeted (Before)</h2>
+        <h2 id="titleBefore">Muscles Targeted</h2>
         <ul id="musclesBefore">
           <li>Loading...</li>
         </ul>
@@ -99,7 +99,7 @@
         Your browser does not support the video tag.
       </video>
       <div class="details">
-        <h2 id="titleAfter">Muscles Targeted (After)</h2>
+        <h2 id="titleAfter">Muscles Targeted</h2>
         <ul id="musclesAfter">
           <li>None</li>
         </ul>
@@ -112,72 +112,72 @@
   </div>
 
   <script>
-    // Fetch data from localStorage
     const activityName = localStorage.getItem('activityName');
-    const videoUrlBefore = localStorage.getItem('videoUrl'); // Video for "Before"
-    const videoUrlAfter = activityName === 'Grinding by Hand' ? '/static/videos/mixer.mp4' :
-                          activityName === 'Washing Clothes by Hand' ? '/static/videos/washing_machine.mp4' :
-                          activityName === 'Fetching Water' ? '/static/videos/motor_fetching.mp4' :
-                          activityName === 'Weaving' ? '/static/videos/weaving_machine.mp4' :
-                          activityName === 'Pounding Paddy by hands' ? '/static/videos/poundingPaddy_machine.mp4' : '';
+    const videoUrlBefore = localStorage.getItem('videoUrl'); 
+    const videoUrlAfterMap = {
+      'Grinding by Hand': '/static/videos/mixer.mp4',
+      'Washing Clothes by Hand': '/static/videos/washing_machine.mp4',
+      'Fetching Water': '/static/videos/motor_fetching.mp4',
+      'Weaving': '/static/videos/weaving_machine.mp4',
+      'Pounding Paddy Traditional Method': '/static/videos/ppm.mp4', // Correct file path
+    };
 
-    // Update DOM elements
+    const videoUrlAfter = videoUrlAfterMap[activityName] || '/static/videos/fallback_after.mp4';
+
     if (activityName) {
       document.getElementById('activityName').textContent = `Activity: ${activityName}`;
+      document.getElementById('videoSourceBefore').src = videoUrlBefore || '/static/videos/fallback_before.mp4';
+      document.getElementById('videoSourceAfter').src = videoUrlAfter;
 
-      // Set video sources
-      const videoSourceBefore = document.getElementById('videoSourceBefore');
-      const videoSourceAfter = document.getElementById('videoSourceAfter');
-      videoSourceBefore.src = videoUrlBefore || '/static/videos/fallback_before.mp4';
-      videoSourceAfter.src = videoUrlAfter || '/static/videos/fallback_after.mp4';
-
-      // Reload videos to apply new sources
       document.getElementById('videoBefore').load();
       document.getElementById('videoAfter').load();
 
-      // Update titles and muscle targets
       const musclesBefore = document.getElementById('musclesBefore');
       const titleBefore = document.getElementById('titleBefore');
       const titleAfter = document.getElementById('titleAfter');
 
-      if (activityName === 'Grinding by Hand') {
-        titleBefore.textContent = 'Muscles Targeted (Before: Grinding by Hand)';
-        musclesBefore.innerHTML = '<li>Chest</li><li>Shoulders</li><li>Core</li>';
-        titleAfter.textContent = 'Muscles Targeted (After: Grinding Using Electric Grinder)';
-      } else if (activityName === 'Washing Clothes by Hand') {
-        titleBefore.textContent = 'Muscles Targeted (Before: Washing Clothes by Hand)';
-        musclesBefore.innerHTML = '<li>Back</li><li>Arms</li><li>Core</li>';
-        titleAfter.textContent = 'Muscles Targeted (After: Washing Using Machine)';
-      } else if (activityName === 'Fetching Water') {
-        titleBefore.textContent = 'Muscles Targeted (Before: Fetching Water)';
-        musclesBefore.innerHTML = '<li>Legs</li><li>Arms</li><li>Back</li>';
-        titleAfter.textContent = 'Muscles Targeted (After: Fetching Water Using Pump)';
-      } else if (activityName === 'Weaving') {
-        titleBefore.textContent = 'Muscles Targeted (Before: Weaving)';
-        musclesBefore.innerHTML = '<li>Arms</li><li>Fingers</li><li>Shoulders</li>';
-        titleAfter.textContent = 'Muscles Targeted (After: Weaving Using Machines)';
-      } else if (activityName === 'Pounding Paddy by hands') {
-        titleBefore.textContent = 'Muscles Targeted (Before: Pounding Paddy by Hands)';
-        musclesBefore.innerHTML = '<li>Shoulders</li><li>Arms</li><li>Core</li>';
-        titleAfter.textContent = 'Muscles Targeted (After: Machine for Seed Cleaning)';
-      } else {
-        musclesBefore.innerHTML = '<li>Data not available</li>';
-      }
+      const activityDetails = {
+        'Grinding by Hand': {
+          before: 'Grinding by Hand',
+          muscles: ['Chest', 'Shoulders', 'Core', 'Triceps', 'Forearms'],
+          after: 'Grinding Using Electric Grinder',
+        },
+        'Washing Clothes by Hand': {
+          before: 'Washing Clothes by Hand',
+          muscles: ['Back', 'Arms', 'Core', 'Shoulders', 'Legs'],
+          after: 'Washing Using Machine',
+        },
+        'Fetching Water': {
+          before: 'Fetching Water',
+          muscles: ['Legs', 'Arms', 'Back', 'Shoulders', 'Core'],
+          after: 'Fetching Water Using Pump',
+        },
+        'Weaving': {
+          before: 'Weaving',
+          muscles: ['Arms', 'Fingers', 'Shoulders', 'Core', 'Back'],
+          after: 'Weaving Using Machines',
+        },
+        'Pounding Paddy Traditional Method': {
+          before: 'Pounding Paddy Traditional Method',
+          muscles: ['Shoulders', 'Arms', 'Core', 'Chest', 'Back'],
+          after: 'Pounding Paddy Machine',
+        },
+      };
+
+      const details = activityDetails[activityName] || {
+        before: 'Unknown',
+        muscles: ['Data not available'],
+        after: 'Unknown',
+      };
+
+      titleBefore.textContent = `Muscles Targeted (${details.before})`;
+      musclesBefore.innerHTML = details.muscles.map(muscle => `<li>${muscle}</li>`).join('');
+      titleAfter.textContent = `Muscles Targeted (${details.after})`;
     } else {
       alert('No activity selected. Redirecting to Page 1.');
       window.location.href = 'page1.html';
     }
 
-    // Video error handling
-    document.getElementById('videoBefore').onerror = function() {
-      console.error('Error loading "Before" video:', videoSourceBefore.src);
-    };
-    
-    document.getElementById('videoAfter').onerror = function() {
-      console.error('Error loading "After" video:', videoSourceAfter.src);
-    };
-
-    // Redirect to page 3
     function redirectToPage(page) {
       window.location.href = `/page${page}`;
     }

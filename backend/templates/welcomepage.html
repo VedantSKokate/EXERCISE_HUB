@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Welcome to Heritage Strength</title>
+  <title>Welcome to EXERCISE HUB</title>
   <style>
     body {
       margin: 0;
@@ -15,15 +15,41 @@
       font-family: 'Segoe UI', sans-serif;
       background: linear-gradient(135deg, #4a90e2, #f06);
       color: #fff;
+      position: relative;
+      overflow: hidden;
+      flex-direction: column; /* Aligning content vertically */
     }
-    .container {
+
+    .heading-container {
+      position: absolute;
+      top: 20px; /* Distance from the top */
+      width: 100%;
       text-align: center;
       animation: fadeIn 1.5s ease-in;
     }
+
+    .subheading-container {
+      position: absolute;
+      top: 80px; /* Adjust this value to change the space between Welcome to and EXERCISE HUB */
+      width: 100%;
+      text-align: center;
+      animation: fadeIn 1.5s ease-in;
+    }
+
     h1 {
       font-size: 3rem;
-      margin-bottom: 20px;
+      margin: 0;
+      animation: fadeIn 1.5s ease-in;
     }
+
+    .container {
+      text-align: center;
+      animation: fadeIn 1.5s ease-in;
+      margin-top: 20px;
+      position: relative;
+      z-index: 1; /* Ensure the button is on top */
+    }
+
     button {
       background-color: #fff;
       color: #4a90e2;
@@ -33,26 +59,98 @@
       border-radius: 10px;
       cursor: pointer;
       transition: background-color 0.3s, color 0.3s;
+      z-index: 2; /* Ensure the button stays clickable */
     }
+
     button:hover {
       background-color: #4a90e2;
       color: #fff;
     }
+
     @keyframes fadeIn {
       from { opacity: 0; }
       to { opacity: 1; }
     }
+
+    /* Container for all GIFs */
+    .gif-container {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 0; /* Keep GIFs behind the button */
+      width: auto;
+      height: 12cm;  /* Default height for other GIFs */
+    }
+
+    /* Leftmost GIF */
+    .gif-container.leftmost {
+      left: -10%;  /* Send it off the left side of the page */
+    }
+
+    /* Left GIF */
+    .gif-container.left {
+      left: 5%;  /* Distance from the left side */
+      height: 14cm;  /* Set the height for the left GIF to 14cm */
+    }
+
+    /* Right GIF */
+    .gif-container.right {
+      right: 10%;  /* Distance from the right side */
+      height: 12cm;  /* Set the height for the right GIF */
+    }
+
+    /* Rightmost GIF */
+    .gif-container.rightmost {
+      right: -10%;  /* Send it off the right side of the page */
+      height: 12cm;  /* Set the height for the rightmost GIF */
+    }
+
+    img {
+      height: 100%;  /* Adjust height based on parent container */
+      width: auto;   /* Maintain aspect ratio */
+    }
   </style>
 </head>
 <body>
+  <!-- Heading "Welcome to" -->
+  <div class="heading-container">
+    <h1>Welcome to</h1>
+  </div>
+
+  <!-- Subheading "EXERCISE HUB" -->
+  <div class="subheading-container">
+    <h1>EXERCISE HUB</h1>
+  </div>
+
+  <!-- Main Button -->
   <div class="container">
-    <h1>Welcome to EXERCISE HUB</h1>
-    <button onclick="redirectToPage(1)">Enter</button>
+    <button onclick="redirectToPage()">Enter</button>
+  </div>
+
+  <!-- Leftmost GIF -->
+  <div class="gif-container leftmost">
+    <img src="/static/gifs/walk.gif" alt="Skeleton Leftmost GIF">
+  </div>
+
+  <!-- Left GIF -->
+  <div class="gif-container left">
+    <img src="/static/gifs/fullbody.gif" alt="Skeleton Left GIF">
+  </div>
+
+  <!-- Right GIF -->
+  <div class="gif-container right">
+    <img src="/static/gifs/run.gif" alt="Skeleton Right GIF">
+  </div>
+
+  <!-- Rightmost GIF -->
+  <div class="gif-container rightmost">
+    <img src="/static/gifs/sidewalk.gif" alt="Skeleton Rightmost GIF">
   </div>
 
   <script>
-    function redirectToPage(page) {
-      window.location.href = `/page${page}`;
+    // Function to redirect to page1
+    function redirectToPage() {
+      window.location.href = '/page1'; 
     }
   </script>
 </body>

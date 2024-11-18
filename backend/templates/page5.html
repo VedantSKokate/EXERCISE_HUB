@@ -105,78 +105,80 @@
     const exerciseData = {
       'Grinding by Hand': {
         exercises: [
-          {
-            video: '/static/videos/superman_pushup.mp4',
-            description: 'Superman Pushups (Core, Shoulders)'
-          },
-          {
-            video: '/static/videos/Chaturangadandasana.mp4',
-            description: 'Chaturanga Dandasana (Legs, Core)'
-          }
+          { video: '/static/videos/superman_pushup.mp4', description: 'Superman Pushups (Full Core, Shoulders)' },
+          { video: '/static/videos/Vrikshasana.mp4', description: 'Vrikshasana (Tree Pose for Core Stability)' }
         ],
         instructions: [
-          'Do 3 sets of each grinding exercise daily.',
-          'Eat protein-rich foods after exercise for muscle repair.',
-          'Stay hydrated and maintain balance while exercising.',
-          'Ensure proper form to avoid injury, especially to your back.',
-          'Rest for 60 seconds between sets.'
-        ]
-      },
-      'Fetching Water': {
-        exercises: [
-          {
-            video: '/static/videos/fetchingwater1.mp4',
-            description: 'Exercise 1 (Legs, Core)'
-          },
-          {
-            video: '/static/videos/fetchingwater2.mp4',
-            description: 'Exercise 2 (Back, Shoulders)'
-          }
-        ],
-        instructions: [
-          'Do 4 sets of each fetching exercise, focusing on balance.',
-          'Lift weights similar to water buckets to simulate the activity.',
-          'Take breaks if you feel fatigued, as these exercises are demanding.',
-          'Focus on your core and back muscles to stabilize your body.',
-          'Hydrate before and after the exercises to avoid cramps.'
+          'Perform Superman Pushups to engage core and shoulders, targeting functional strength.',
+          'Vrikshasana improves balance and enhances core stability.',
+          'Complete 3 sets of each exercise, holding yoga poses for 30 seconds per leg.',
+          'Take 1-minute rest between sets.',
+          'Hydrate well and focus on controlled movements.'
         ]
       },
       'Washing Clothes by Hand': {
         exercises: [
-          {
-            video: '/static/videos/DumbbellBentOverRow.mp4',
-            description: 'Dumbbell Bent Over Row (Arms, Core)'
-          },
-          {
-            video: '/static/videos/SuryaNamaskara.mp4',
-            description: 'Surya Namaskara (Shoulders, Back)'
-          }
+          { video: '/static/videos/plank_rows.mp4', description: 'Plank Rows (Back, Core, and Arms)' },
+          { video: '/static/videos/warrior_pose.mp4', description: 'Virabhadrasana (Warrior Pose for Endurance)' }
         ],
         instructions: [
-          'Do 3 sets of each exercise with emphasis on form.',
-          'Use resistance bands or weights to mimic the washing motion.',
-          'Focus on squeezing your muscles to maximize effectiveness.',
-          'Avoid rushing through movements to prevent injury.',
-          'Rest for 45 seconds between each set.'
+          'Perform Plank Rows to target back, arms, and core.',
+          'Practice Warrior Pose to stretch and strengthen your legs, core, and shoulders.',
+          'Do 3 sets with 8-12 reps for dynamic exercises and hold yoga poses for 30 seconds each side.',
+          'Rest for 45 seconds between sets.',
+          'Focus on proper alignment and breathe deeply during yoga poses.'
+        ]
+      },
+      'Fetching Water': {
+        exercises: [
+          { video: '/static/videos/farmers_walk.mp4', description: 'Farmer’s Walk (Full Body Strength)' },
+          { video: '/static/videos/chair_pose.mp4', description: 'Utkatasana (Chair Pose for Legs and Core)' }
+        ],
+        instructions: [
+          'Farmer’s Walk improves full-body coordination and strength.',
+          'Chair Pose builds endurance and balance in the lower body.',
+          'Perform Farmer’s Walk for 60 seconds and hold Chair Pose for 30 seconds per set.',
+          'Complete 3 sets with 1-minute rest in between.',
+          'Ensure even weight distribution and controlled breathing.'
+        ]
+      },
+      'Weaving': {
+        exercises: [
+          { video: '/static/videos/hand_grip.mp4', description: 'Hand Gripping Exercises (Forearms)' },
+          { video: '/static/videos/eagle_pose.mp4', description: 'Garudasana (Eagle Pose for Dexterity)' }
+        ],
+        instructions: [
+          'Hand Gripping Exercises strengthen your forearms and improve endurance.',
+          'Eagle Pose enhances coordination and stretches shoulders and arms.',
+          'Hold the Eagle Pose for 30 seconds on each side and repeat grip exercises for 12-15 reps.',
+          'Complete 3 sets with 30 seconds rest.',
+          'Focus on fluid motion and avoid overexertion.'
+        ]
+      },
+      'Pounding Paddy Traditional Method': {
+        exercises: [
+          { video: '/static/videos/medicine_ball_slams.mp4', description: 'Medicine Ball Slams (Shoulders, Core)' },
+          { video: '/static/videos/cobra_pose.mp4', description: 'Bhujangasana (Cobra Pose for Spine and Core)' }
+        ],
+        instructions: [
+          'Medicine Ball Slams improve explosive power and shoulder endurance.',
+          'Cobra Pose stretches the spine and strengthens the lower back.',
+          'Perform 8-10 slams per set and hold Cobra Pose for 20-30 seconds.',
+          'Do 3 sets, resting for 1 minute in between.',
+          'Engage your core during ball slams and maintain smooth breathing.'
         ]
       },
       'default': {
         exercises: [
-          {
-            video: '/static/videos/default1.mp4',
-            description: 'Exercise 1 (Core, Legs)'
-          },
-          {
-            video: '/static/videos/default2.mp4',
-            description: 'Exercise 2 (Arms, Shoulders)'
-          }
+          { video: '/static/videos/bodyweightsquats.mp4', description: 'Bodyweight Squats (Legs, Core)' },
+          { video: '/static/videos/child_pose.mp4', description: 'Balasana (Child’s Pose for Relaxation)' }
         ],
         instructions: [
-          'Perform these exercises if no specific activity was selected.',
-          'Do 3 sets of each exercise daily.',
-          'Stay hydrated and maintain proper form throughout.',
-          'Ensure to stretch before and after your workout to avoid injury.',
-          'Rest for 30 seconds between each set.'
+          'Bodyweight Squats target your legs and core.',
+          'Child’s Pose provides relaxation and stretches your back.',
+          'Do 3 sets of squats with 10-12 reps and hold Child’s Pose for 30 seconds.',
+          'Rest for 1 minute between sets.',
+          'Warm up before starting and ensure proper squat form.'
         ]
       }
     };
@@ -193,7 +195,6 @@
         <video src="${exercise.video}" controls></video>
         <p>${exercise.description}</p>
       `;
-      exerciseDiv.onclick = () => redirectToExercise(exercise.description);
       exerciseContainer.appendChild(exerciseDiv);
     });
 
@@ -204,12 +205,6 @@
       li.textContent = instruction;
       instructionList.appendChild(li);
     });
-
-    // Function to redirect to the specific exercise page with exercise name
-    function redirectToExercise(exerciseDescription) {
-      const exerciseName = exerciseDescription.toLowerCase().replace(/[^a-z0-9]/g, ''); // Make it URL-friendly
-      window.location.href = `/page6/${exerciseName}`;
-    }
   </script>
 </body>
 </html>

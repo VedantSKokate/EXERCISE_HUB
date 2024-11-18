@@ -31,12 +31,12 @@
 
     .video-grid {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);  /* Two videos per row */
-      gap: 30px;  /* More gap for better spacing */
+      grid-template-columns: repeat(2, 1fr); /* Two videos per row */
+      gap: 30px; /* More gap for better spacing */
       width: 90%;
       padding: 20px;
-      max-height: 65vh;  /* Limit height */
-      overflow-y: scroll;  /* Scrollbar for third row */
+      max-height: 65vh; /* Limit height */
+      overflow-y: scroll; /* Scrollbar for additional rows */
     }
 
     .exercise {
@@ -55,7 +55,7 @@
 
     video {
       width: 100%;
-      height: 300px;  /* Increased height of videos */
+      height: 300px; /* Height of video blocks */
       border-radius: 10px;
       border: 2px solid rgba(255, 255, 255, 0.2);
     }
@@ -105,7 +105,7 @@
   </header>
 
   <section class="video-grid" id="exerciseGrid">
-    <!-- Dynamic gym exercises will be loaded here based on the selected activity -->
+    <!-- Dynamic gym exercises will be loaded here -->
   </section>
 
   <footer>
@@ -113,71 +113,69 @@
   </footer>
 
   <script>
-    // Retrieve the selected activity from localStorage
-    const selectedActivity = localStorage.getItem('activityName');
-
-    // Define a mapping from activities to gym exercises
+    // Define the mapping of activities to gym exercises
     const activityToExercisesMap = {
       'Grinding by Hand': [
         { video: '/static/videos/benchpress.mp4', description: 'Bench Press (Chest, Shoulders, Triceps)' },
         { video: '/static/videos/plank.mp4', description: 'Plank (Core, Shoulders)' },
-        { video: '/static/videos/pushups.mp4', description: 'Push-ups (Chest, Core, Shoulders)' }
+        { video: '/static/videos/pushups.mp4', description: 'Push-ups (Chest, Core, Shoulders)' },
+        { video: '/static/videos/cablefly.mp4', description: 'Cable Fly (Chest)' }
       ],
       'Washing Clothes by Hand': [
         { video: '/static/videos/latpulldown.mp4', description: 'Lat Pulldown (Back, Biceps)' },
-        { video: '/static/videos/bentoverrow.mp4', description: 'Bent Over Row (Back, Shoulders)' }
+        { video: '/static/videos/bentoverrow.mp4', description: 'Bent Over Row (Back, Shoulders)' },
+        { video: '/static/videos/facepulls.mp4', description: 'Face Pulls (Shoulders, Back)' },
+        { video: '/static/videos/dumbbellcurl.mp4', description: 'Dumbbell Curl (Biceps)' }
       ],
       'Fetching Water': [
         { video: '/static/videos/deadlift.mp4', description: 'Deadlift (Back, Legs, Core)' },
-        { video: '/static/videos/squats.mp4', description: 'Squats (Legs, Core)' }
+        { video: '/static/videos/squats.mp4', description: 'Squats (Legs, Core)' },
+        { video: '/static/videos/farmerswalk.mp4', description: 'Farmer’s Walk (Core, Shoulders)' },
+        { video: '/static/videos/stepups.mp4', description: 'Step-Ups (Legs, Glutes)' }
       ],
       'Weaving': [
         { video: '/static/videos/shoulderpress.mp4', description: 'Shoulder Press (Shoulders, Triceps)' },
-        { video: '/static/videos/latraises.mp4', description: 'Lateral Raises (Shoulders)' }
+        { video: '/static/videos/latraises.mp4', description: 'Lateral Raises (Shoulders)' },
+        { video: '/static/videos/handgrippers.mp4', description: 'Hand Grippers (Forearm Strength)' },
+        { video: '/static/videos/forearmcurls.mp4', description: 'Forearm Curls (Grip)' }
       ],
-      'Sewing by Hand': [
-        { video: '/static/videos/bicepcurl.mp4', description: 'Bicep Curl (Biceps)' },
-        { video: '/static/videos/tricepsextension.mp4', description: 'Triceps Extension (Triceps)' }
-      ],
-      'Pounding Grains': [
-        { video: '/static/videos/hammercurl.mp4', description: 'Hammer Curl (Biceps, Forearms)' },
-        { video: '/static/videos/overheadpress.mp4', description: 'Overhead Press (Shoulders, Triceps)' }
+      'Pounding Paddy Traditional Method': [
+        { video: '/static/videos/overheadpress.mp4', description: 'Overhead Press (Shoulders, Triceps)' },
+        { video: '/static/videos/tricepextensions.mp4', description: 'Tricep Extensions (Triceps)' },
+        { video: '/static/videos/pushpress.mp4', description: 'Push Press (Shoulders, Core)' },
+        { video: '/static/videos/landminepress.mp4', description: 'Landmine Press (Shoulders)' }
       ]
     };
 
-    // Function to render gym exercises based on the selected activity
+    // Get the selected activity from localStorage
+    const selectedActivity = localStorage.getItem('activityName');
+
+    // Render exercises dynamically
     function renderExercises() {
       const exerciseGrid = document.getElementById('exerciseGrid');
-
-      // Get the exercises for the selected activity from the map
       const exercises = activityToExercisesMap[selectedActivity] || [];
 
-      // Clear the existing grid content
-      exerciseGrid.innerHTML = '';
-
-      // Dynamically create exercise elements and append to the grid
       exercises.forEach(exercise => {
-        const exerciseElement = document.createElement('div');
-        exerciseElement.classList.add('exercise');
+        const exerciseDiv = document.createElement('div');
+        exerciseDiv.classList.add('exercise');
 
-        const videoElement = document.createElement('video');
-        videoElement.src = exercise.video;
-        videoElement.controls = true;
+        const video = document.createElement('video');
+        video.src = exercise.video;
+        video.controls = true;
 
-        const descriptionElement = document.createElement('p');
-        descriptionElement.textContent = exercise.description;
+        const description = document.createElement('p');
+        description.textContent = exercise.description;
 
-        exerciseElement.appendChild(videoElement);
-        exerciseElement.appendChild(descriptionElement);
+        exerciseDiv.appendChild(video);
+        exerciseDiv.appendChild(description);
 
-        exerciseGrid.appendChild(exerciseElement);
+        exerciseGrid.appendChild(exerciseDiv);
       });
     }
 
-    // Call the function to render the exercises when the page loads
-    window.onload = renderExercises;
+    renderExercises();
 
-    // Function to redirect to page4
+    // Redirect to comparison page
     function redirectToPage(page) {
       window.location.href = `/page${page}`;
     }

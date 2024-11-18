@@ -37,17 +37,17 @@
     }
 
     .scroll-wrapper {
-      width: 100vw; /* Full screen width for container */
-      overflow-x: auto; /* Enable horizontal scroll */
-      white-space: nowrap; /* Prevent wrapping of columns */
-      scroll-behavior: smooth; /* Smooth scrolling */
+      width: 100vw;
+      overflow-x: auto;
+      white-space: nowrap;
+      scroll-behavior: smooth;
     }
 
     .block {
-      display: inline-block; /* Columns align horizontally */
+      display: inline-block;
       vertical-align: top;
-      width: 23%; /* 4 columns fit in one screen (100% / 4) */
-      margin: 0 10px; /* Margin between blocks */
+      width: 23%;
+      margin: 0 10px;
       background: rgba(255, 255, 255, 0.1);
       border-radius: 10px;
       padding: 10px;
@@ -71,7 +71,7 @@
     .video-wrapper {
       position: relative;
       width: 100%;
-      padding-bottom: 56.25%; /* Aspect ratio 16:9 */
+      padding-bottom: 56.25%;
       overflow: hidden;
       border-radius: 10px;
     }
@@ -90,7 +90,7 @@
       font-weight: bold;
       text-align: center;
       margin-bottom: 5px;
-      color: #ffffff; /* White color for contrast */
+      color: #ffffff;
     }
   </style>
 </head>
@@ -105,14 +105,14 @@
     <!-- Column 1 -->
     <div class="block">
       <div class="label">Before</div>
-      <div class="activity" onclick="selectActivity('Grinding by Hand', '/static/videos/Stone_grinding.mp4')">
+      <div class="activity" onclick="selectActivity('Grinding by Hand', '/static/videos/grinding_by_hand.mp4', 'grinding')">
         <div class="video-wrapper">
           <video src="/static/videos/grinding_by_hand.mp4" controls></video>
         </div>
         <p>Grinding by Hand</p>
       </div>
       <div class="label">Nowadays</div>
-      <div class="activity" onclick="selectActivity('Grinding using electric grinder', '/static/videos/Stone_grinding_2.mp4')">
+      <div class="activity">
         <div class="video-wrapper">
           <video src="/static/videos/mixer.mp4" controls></video>
         </div>
@@ -123,14 +123,14 @@
     <!-- Column 2 -->
     <div class="block">
       <div class="label">Before</div>
-      <div class="activity" onclick="selectActivity('Washing Clothes by Hand', '/static/videos/washing_clothes.mp4')">
+      <div class="activity" onclick="selectActivity('Washing Clothes by Hand', '/static/videos/washing_clothes.mp4', 'washing')">
         <div class="video-wrapper">
           <video src="/static/videos/washing_clothes.mp4" controls></video>
         </div>
         <p>Washing Clothes by Hand</p>
       </div>
       <div class="label">Nowadays</div>
-      <div class="activity" onclick="selectActivity('Washing Clothes using Washing Machine', '/static/videos/washing_clothes_2.mp4')">
+      <div class="activity">
         <div class="video-wrapper">
           <video src="/static/videos/washing_machine.mp4" controls></video>
         </div>
@@ -141,14 +141,14 @@
     <!-- Column 3 -->
     <div class="block">
       <div class="label">Before</div>
-      <div class="activity" onclick="selectActivity('Fetching Water', '/static/videos/activity3.mp4')">
+      <div class="activity" onclick="selectActivity('Fetching Water', '/static/videos/hand_fetching.mp4', 'fetching')">
         <div class="video-wrapper">
           <video src="/static/videos/hand_fetching.mp4" controls></video>
         </div>
         <p>Fetching Water</p>
       </div>
       <div class="label">Nowadays</div>
-      <div class="activity" onclick="selectActivity('Fetching Water-Pump Machine', '/static/videos/activity3_2.mp4')">
+      <div class="activity">
         <div class="video-wrapper">
           <video src="/static/videos/motor_fetching.mp4" controls></video>
         </div>
@@ -159,14 +159,14 @@
     <!-- Column 4 -->
     <div class="block">
       <div class="label">Before</div>
-      <div class="activity" onclick="selectActivity('Weaving', '/static/videos/activity4.mp4')">
+      <div class="activity" onclick="selectActivity('Weaving', '/static/videos/weaving_by_hands.mp4', 'weaving')">
         <div class="video-wrapper">
           <video src="/static/videos/weaving_by_hands.mp4" controls></video>
         </div>
         <p>Weaving</p>
       </div>
       <div class="label">Nowadays</div>
-      <div class="activity" onclick="selectActivity('Weaving using machines', '/static/videos/activity4_2.mp4')">
+      <div class="activity">
         <div class="video-wrapper">
           <video src="/static/videos/weaving_machine.mp4" controls></video>
         </div>
@@ -177,16 +177,16 @@
     <!-- Column 5 -->
     <div class="block">
       <div class="label">Before</div>
-      <div class="activity" onclick="selectActivity('Pounding Paddy by hands', '/static/videos/activity5.mp4')">
+      <div class="activity" onclick="selectActivity('Pounding Paddy Traditional Method', '/static/videos/pph.mp4','pounding')">
         <div class="video-wrapper">
-          <video src="/static/videos/PoundingPaddy_by hands.mp4" controls></video>
+          <video src="/static/videos/pph.mp4" controls></video>
         </div>
-        <p>Pounding paddy Traditional Method</p>
+        <p>Pounding Paddy Traditional Method</p>
       </div>
       <div class="label">Nowadays</div>
-      <div class="activity" onclick="selectActivity('Pounding Paddy Machine', '/static/videos/activity5_2.mp4')">
+      <div class="activity">
         <div class="video-wrapper">
-          <video src="/static/videos/poundingPaddy_machine.mp4" controls></video>
+          <video src="/static/videos/ppm.mp4" controls></video>
         </div>
         <p>Pounding Paddy Machine</p>
       </div>
@@ -194,12 +194,24 @@
   </div>
 
   <script>
-    function selectActivity(activity, videoUrl) {
-      localStorage.setItem('activityName', activity);
-      localStorage.setItem('videoUrl', videoUrl);
-      window.location.href = '/page2?exercise_name=Push-Ups&video1_url=/static/videos/video1.mp4&video2_url=/static/videos/video2.mp4';
+    function selectActivity(activity, videoUrl, column) {
+      const pageMap = {
+        grinding: '/page2?exercise_name=Grinding&video1_url=/static/videos/grinding_by_hand.mp4&video2_url=/static/videos/mixer.mp4',
+        washing: '/page2?exercise_name=Washing&video1_url=/static/videos/washing_clothes.mp4&video2_url=/static/videos/washing_machine.mp4',
+        fetching: '/page2?exercise_name=Fetching&video1_url=/static/videos/hand_fetching.mp4&video2_url=/static/videos/motor_fetching.mp4',
+        weaving: '/page2?exercise_name=Weaving&video1_url=/static/videos/weaving_by_hands.mp4&video2_url=/static/videos/weaving_machine.mp4',
+        pounding: '/page2?exercise_name=Pounding&video1_url=/static/videos/PoundingPaddy_by_hands.mp4&video2_url=/static/videos/poundingPaddy_machine.mp4',
+      };
+
+      const redirectUrl = pageMap[column];
+      if (redirectUrl) {
+        localStorage.setItem('activityName', activity);
+        localStorage.setItem('videoUrl', videoUrl);
+        window.location.href = redirectUrl;
+      } else {
+        console.error('Invalid column or activity type.');
+      }
     }
   </script>
-  
 </body>
 </html>

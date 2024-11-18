@@ -10,20 +10,27 @@ def welcome_page():
 # Route for page 1 that shows activities
 @app.route('/page1')
 def page1():
+    # Serve the first page
     return render_template('page1.html')
 
-# Route for page 2 with parameters for the specific activity clicked
 @app.route('/page2')
 def page2():
+    # Extract parameters from query string
     exercise_name = request.args.get('exercise_name')
     video1_url = request.args.get('video1_url')
     video2_url = request.args.get('video2_url')
 
-    if not exercise_name or not video1_url or not video2_url:
+    # Redirect to page1 if any parameter is missing
+    if not (exercise_name and video1_url and video2_url):
         return redirect(url_for('page1'))
 
-    return render_template('page2.html', exercise_name=exercise_name, video1_url=video1_url, video2_url=video2_url)
-
+    # Render page2 with the provided parameters
+    return render_template(
+        'page2.html',
+        exercise_name=exercise_name,
+        video1_url=video1_url,
+        video2_url=video2_url
+    )
 # Route for page 3 (additional exercises or details)
 @app.route('/page3')
 def page3():
